@@ -14,10 +14,6 @@ const More = () => {
                 <span>Max:$1,000.00</span>
             </div>
         </div>
-        <div className="input-parent ">
-            <label htmlFor="check">Free Shipping</label>
-            <input type="checkbox" name="" id="check" className='input check' />
-        </div>
         <button className='button h-10 w-3xs py-0'>Search</button>
         <button className='button h-10 w-3xs bg-pink-500  p-0'>Reset</button>
     </>

@@ -9,10 +9,6 @@ import Header from '../Components/Header'
 const Router = () => {
     return (
         <Routes>
-            {/* <Route path='/' element={<Header />} > */}
-            {/* <Route element={<Header />} /> */}
-            {/* <Route path="" element={<Home />} /> */}
-            {/* The issue with this routing is that the Header component is being used as the element for the root route ('/') instead of being a layout component that wraps the other routes. Here's the corrected code: */}
             <Route path='/' element={<Header/>} >
                 <Route index element={<Home />} />
                 <Route path="about" element={<About />} />

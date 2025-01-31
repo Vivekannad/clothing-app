@@ -34,7 +34,7 @@
   @apply rounded-3xl mx-2 min-w-80 max-w-80 h-[98%] object-cover ;
 }
 .card {
-@apply flex flex-col items-center gap-4 p-2 w-[30%] rounded-lg bg-gray-300 shadow-lg shadow-gray-200 font-mono;
+@apply flex flex-col items-center gap-4 p-2 w-[30%] rounded-lg bg-gray-300 cursor-pointer font-mono;
 }
 .input-parent {
   @apply flex items-center gap-2 flex-col;
