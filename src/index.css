@@ -1,0 +1,47 @@
+@import "tailwindcss";
+
+/* .container {
+  @apply w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+}
+.container-sm {
+  @apply w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8;
+}
+.container-md {
+  @apply w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8;
+}
+.container-lg {
+  @apply w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+}
+.container-xl {
+  @apply w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+}
+.container-2xl {
+  @apply w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+} */
+.pad-start {
+  @apply py-3 px-10;
+}
+.button {
+  @apply bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded cursor-pointer;
+}
+.carousel {
+  @apply h-full w-full flex items-center justify-start  overflow-x-auto whitespace-nowrap
+}
+.carousel::-webkit-scrollbar {
+  display: none;
+}
+.carousel-item {
+  @apply rounded-3xl mx-2 min-w-80 max-w-80 h-[98%] object-cover ;
+}
+.card {
+@apply flex flex-col items-center gap-4 p-2 w-[30%] rounded-lg bg-gray-300 shadow-lg shadow-gray-200 font-mono;
+}
+.input-parent {
+  @apply flex items-center gap-2 flex-col;
+}
+.input {
+  @apply border-2 border-gray-300 rounded-lg px-2;
+}
+.check {
+  @apply w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600
+}
