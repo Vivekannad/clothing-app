@@ -10,13 +10,11 @@ const Products = () => {
     // const [currentPage, setCurrentPage] = useState(1);
     const dispatch = useDispatch();
     const items = useSelector(state => state.products.items);
-    console.log(items);
+    const allItems = useSelector(state => state.products.allItems)
     const currentPage = useSelector(state => state.products.currentPage);
 
     useEffect(() => {
-        dispatch(fetchProduct()).then(() => {
-            console.log("I am running")
-        });
+        dispatch(fetchProduct())
     },[]);
     
     useEffect(() => {
@@ -41,7 +39,7 @@ const Products = () => {
 
   return (
     <>
-      {items.length > 0 ?
+      {allItems.length > 0 ?
         (
             <>
             <section className='products pad-start mt-10'>

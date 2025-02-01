@@ -13,6 +13,7 @@ const initialState = {
     featuredItems: [],
     allCategories: [],
     getCategoryItems: [],
+    // nameFilter : '',
 };
 
 export const fetchProduct = createAsyncThunk('products/fetchProduct', async () => {
@@ -114,9 +115,19 @@ const productsSlice = createSlice({
             const startIndex = (state.currentPage - 1) * state.itemsPerPage;
             const endIndex = state.currentPage * state.itemsPerPage;
             state.items = state.sortedItems.slice(startIndex, endIndex);
+        } , 
+        setNameFilter: (state, action) => {
+            // state.nameFilter = action.payload;
+            state.sortedItems = state.allItems.filter(item => item.title.toLowerCase().includes(action.payload.toLowerCase()));
+            state.items = state.sortedItems;
+
+            //apply pagination
+            const startIndex = (state.currentPage - 1) * state.itemsPerPage;
+            const endIndex = state.currentPage * state.itemsPerPage;
+            state.items = state.sortedItems.slice(startIndex, endIndex);
         }
     }
 });
 
 export default productsSlice.reducer;
-export const { getFeaturedItems, getAllCategories, sortByPriceAsc, sortByPriceDesc , sortByTitleAsc , sortByTitleDesc , setCurrentPage , getCategoryItems } = productsSlice.actions;
+export const { getFeaturedItems, getAllCategories, sortByPriceAsc, sortByPriceDesc , sortByTitleAsc , sortByTitleDesc , setCurrentPage , getCategoryItems , setNameFilter } = productsSlice.actions;
