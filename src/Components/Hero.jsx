@@ -16,7 +16,6 @@ const Hero = () => {
       })
     },[])
     const items = useSelector(state => state.products.featuredItems);
-    console.log(items);
   return (
     <main className='flex flex-col gap-4 pad-start mt-10'>
         <section className='flex justify-between items-start gap-8'>

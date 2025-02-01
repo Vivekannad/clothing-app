@@ -1,19 +1,44 @@
 import React, { useEffect, useState } from 'react'
 import FilterSection from '../Components/FilterSection'
 import ProductCard from '../Components/ProductCard'
-import { useDispatch } from 'react-redux';
-import { fetchProduct } from '../Slices/getItemsSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchProduct, sortByTitleAsc , setCurrentPage } from '../Slices/getItemsSlice';
+import Spinner from '../Components/Spinner';
 
 const Products = () => {
-    const [items , setItems] = useState([]);
+    // const [items , setItems] = useState([]);
+    // const [currentPage, setCurrentPage] = useState(1);
     const dispatch = useDispatch();
-    useEffect(() => {
-        dispatch(fetchProduct()).then((res) => {
-            setItems(res.payload);
-        });
-    },[])
-    // const item = useSelector(state => state.products.items);
+    const items = useSelector(state => state.products.items);
     console.log(items);
+    const currentPage = useSelector(state => state.products.currentPage);
+
+    useEffect(() => {
+        dispatch(fetchProduct()).then(() => {
+            console.log("I am running")
+        });
+    },[]);
+    
+    useEffect(() => {
+        dispatch(sortByTitleAsc());
+    }, [currentPage, dispatch]);
+
+    const handlePageChange = (page) => {
+        if(items.length < 15) {
+            dispatch(setCurrentPage(1));
+            return;
+        };
+        if(page === 0){
+            if(items.length < 15) {
+                dispatch(setCurrentPage(1));
+                return;
+            };
+            dispatch(setCurrentPage(currentPage + 1));
+            return;
+        }
+        dispatch(setCurrentPage(page));
+    }
+
   return (
     <>
       {items.length > 0 ?
@@ -22,24 +47,39 @@ const Products = () => {
             <section className='products pad-start mt-10'>
                 <FilterSection />
                 <ProductCard items = {items} />
-            </section>
-            <div className="pages flex ">
+            <div className="pages flex justify-end gap-1 my-10 items-center">
                 <div className="page-item">
-                    <button className="page-link">1</button>
+                    <button
+                     className="page-link border-2 px-2 border-black hover:bg-gray-200 cursor-pointer "
+                     style={{backgroundColor: currentPage === 1 && 'lightgreen' }}
+                     onClick={() => {handlePageChange(1)}}
+                     > 1</button>
                 </div>
                 <div className="page-item">
-                    <button className="page-link">2</button>
+                    <button
+                     className="page-link border-2 px-2 border-black hover:bg-gray-200 cursor-pointer"
+                     style={{backgroundColor: currentPage === 2 && 'lightgreen' }}
+                     onClick={() => {handlePageChange(2)}}>2
+                     </button>
                 </div>
                 <div className="page-item">
-                    <button className="page-link">3</button>
+                    <button
+                     className="page-link border-2 px-2 border-black hover:bg-gray-200 cursor-pointer"
+                     style={{backgroundColor: currentPage === 3 && 'lightgreen' }}
+                     onClick={() => {handlePageChange(3)}}
+                     >3</button>
                 </div>
                 <div className="page-item">
-                    <button className="page-link">Next</button>
+                    <button
+                     className="page-link border-2 px-2 border-black hover:bg-gray-200 cursor-pointer"
+                     onClick={() => {handlePageChange(0)}}
+                     >Next</button>
                 </div>
             </div>
+            </section>
              </>
         )
-      : <h1>Nothing in the items</h1>}
+      : <Spinner/>}
     </>
   )
 }
