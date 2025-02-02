@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import More from './More'
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchProduct, getAllCategories, getCategoryItems, setNameFilter, sortByPriceAsc, sortByPriceDesc, sortByTitleAsc, sortByTitleDesc } from '../Slices/getItemsSlice';
+import { getAllCategories, getCategoryItems, setNameFilter, sortByPriceAsc, sortByPriceDesc, sortByTitleAsc, sortByTitleDesc } from '../Slices/getItemsSlice';
 
 const FilterSection = () => {
     const [category, setCategory] = useState('0');
@@ -17,9 +17,9 @@ const FilterSection = () => {
     useEffect(() => {
 
         if (filtersApply) {
-            if(search.trim() !== '') {
-                dispatch(setNameFilter(search));
-            }
+
+                dispatch(setNameFilter(search.trim()));
+
             dispatch(getCategoryItems(category))
             if (sort !== '') {
                 if (sort === 'a-asc') {
@@ -38,7 +38,7 @@ const FilterSection = () => {
             }
         }
         setFiltersApply(false);
-    }, [filtersApply])
+    }, [filtersApply ])
 
     const categor = useSelector(state => state.products);
     const categories = categor.allCategories;
@@ -76,7 +76,7 @@ const FilterSection = () => {
                         <span>Select price</span>
                         <span>$10000</span>
                     </label>
-                    <input type="range" name="" id="range" min={0} max={10000} value={10000} step={1000} className='input w-full' />
+                    <input type="range" name="" id="range" min={0} max={10000} value={10000} step={-1000} className='input w-full cursor-pointer' />
                     <div className="prices flex justify-between w-full">
                         <span>0</span>
                         <span>Max:$1,000.00</span>

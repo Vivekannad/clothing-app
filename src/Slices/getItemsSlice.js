@@ -13,7 +13,6 @@ const initialState = {
     featuredItems: [],
     allCategories: [],
     getCategoryItems: [],
-    // nameFilter : '',
 };
 
 export const fetchProduct = createAsyncThunk('products/fetchProduct', async () => {
@@ -103,11 +102,8 @@ const productsSlice = createSlice({
             state.items = state.sortedItems.slice(startIndex, endIndex);
         },
         getCategoryItems: (state, action) => {
-            if(Number(action.payload) === 0) {
-                state.getCategoryItems = state.allItems;
-                state.sortedItems = state.getCategoryItems;
-            }else{
-                state.getCategoryItems = state.allItems.filter(item => item.category.id === Number(action.payload));
+            if(Number(action.payload) !== 0) {
+                state.getCategoryItems = [...state.sortedItems].filter(item => item.category.id === Number(action.payload));
                 state.sortedItems = state.getCategoryItems;
             }
         
