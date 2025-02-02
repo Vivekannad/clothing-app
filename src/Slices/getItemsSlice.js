@@ -12,10 +12,13 @@ const initialState = {
     itemsPerPage: 15,
     featuredItems: [],
     allCategories: [],
-    getCategoryItems: [],
+    category : '0',
+    filterOrder : '',
+    itemSearch : ''
 };
 
 export const fetchProduct = createAsyncThunk('products/fetchProduct', async () => {
+    
     const url = (`https://api.escuelajs.co/api/v1/products`);
 
     const response = await fetch(url);
@@ -70,6 +73,18 @@ const productsSlice = createSlice({
                 }
             })
         },
+        setItems : (state , action) => {
+            state.items = action.payload;
+        },
+        setCategory : (state ,action) => {
+            state.category = action.payload;
+        },
+        setFilterOrder : (state , action) => {
+            state.filterOrder = action.payload;
+        },
+        setItemSearch : (state , action) => {
+            state.itemSearch = action.payload;
+        },
         setCurrentPage: (state, action) => {
             state.currentPage = action.payload;
         },
@@ -103,8 +118,8 @@ const productsSlice = createSlice({
         },
         getCategoryItems: (state, action) => {
             if(Number(action.payload) !== 0) {
-                state.getCategoryItems = [...state.sortedItems].filter(item => item.category.id === Number(action.payload));
-                state.sortedItems = state.getCategoryItems;
+                state.sortedItems = [...state.sortedItems].filter(item => item.category.id === Number(action.payload));
+                // state.sortedItems = state.getCategoryItems;
             }
         
             //apply pagination
@@ -123,7 +138,10 @@ const productsSlice = createSlice({
             state.items = state.sortedItems.slice(startIndex, endIndex);
         }
     }
-});
+}
+)
 
 export default productsSlice.reducer;
-export const { getFeaturedItems, getAllCategories, sortByPriceAsc, sortByPriceDesc , sortByTitleAsc , sortByTitleDesc , setCurrentPage , getCategoryItems , setNameFilter } = productsSlice.actions;
+export const { getFeaturedItems, getAllCategories, setCategory , setItemSearch , setFilterOrder, sortByPriceAsc, sortByPriceDesc , sortByTitleAsc , sortByTitleDesc , setCurrentPage , getCategoryItems , setNameFilter , setItems } = productsSlice.actions;
+// export const {getFeaturedItems , getAllCategories , setItems} = productsSlice.actions;
+// export const {items , allItems} = initialState;

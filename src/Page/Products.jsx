@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import FilterSection from '../Components/FilterSection'
-import ProductCard from '../Components/ProductCard'
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProduct, sortByTitleAsc, setCurrentPage } from '../Slices/getItemsSlice';
 import Spinner from '../Components/Spinner';
 import Card from '../Components/Card';
+
 
 const Products = () => {
  
@@ -14,7 +14,9 @@ const Products = () => {
     const currentPage = useSelector(state => state.products.currentPage);
 
     useEffect(() => {
-        dispatch(fetchProduct())
+        dispatch(fetchProduct()).then((res) => {
+            console.log("I am running", res);
+        })
     }, []);
 
     useEffect(() => {
