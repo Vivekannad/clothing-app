@@ -80,14 +80,13 @@ const productsSlice = createSlice({
                 }
             })
         },
-        getAllBrands : (state) => {
-            state.allBrands = [];
-            state.allItems.map((item) => {
-                if (state.allBrands.findIndex((brand) => brand === item.brand) === -1) {
-                    state.allBrands.push(item.brand);
-                }
-            })
-        },
+        getAllBrands: (state) => {
+  state.allBrands = state.allItems
+    .filter((item) => state.category === "" || item.category === state.category) // Filter by category
+    .map((item) => item.brand) // Extract brands
+    .filter((brand, index, self) => self.indexOf(brand) === index); // Remove duplicates
+},
+
         setItems : (state , action) => {
             state.items = action.payload;
         },

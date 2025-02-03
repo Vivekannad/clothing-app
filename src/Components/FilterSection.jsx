@@ -17,10 +17,13 @@ const FilterSection = () => {
     useEffect(() => {
         dispatch(getAllCategories());
 
-        dispatch(getAllBrands());
         // dispatch(setFilterOrder('a-asc'));
         // dispatch(getCategoryItems(category))
     }, [])
+    
+    useEffect(() => {
+        dispatch(getAllBrands());
+    },[category])
 
     useEffect(() => {
 
