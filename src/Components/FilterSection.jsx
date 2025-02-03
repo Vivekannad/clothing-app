@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllCategories, getCategoryItems, setCategory, setCurrentPage, setFilterOrder, setItemSearch, setNameFilter, sortByPriceAsc, sortByPriceDesc, sortByTitleAsc, sortByTitleDesc } from '../Slices/getItemsSlice';
+import { getAllBrands, getAllCategories, getCategoryItems, setCategory, setCurrentPage, setFilterOrder, setItemSearch, setNameFilter, setSelectedBrand, sortByBrand, sortByPriceAsc, sortByPriceDesc, sortByTitleAsc, sortByTitleDesc } from '../Slices/getItemsSlice';
 
 
 const FilterSection = () => {
@@ -8,13 +8,16 @@ const FilterSection = () => {
     const [filtersApply, setFiltersApply] = useState(false);
     const dispatch = useDispatch();
     const category = useSelector(state => state.products.category);
-    const allCategory = useSelector(state => state.products.allCategories);
+    const allBrands = useSelector(state => state.products.allBrands);
+    const selectedBrand = useSelector(state => state.products.selectedBrand);
     const filterOrder = useSelector(state => state.products.filterOrder);
     const itemSearch = useSelector(state => state.products.itemSearch);
 
 
     useEffect(() => {
         dispatch(getAllCategories());
+
+        dispatch(getAllBrands());
         // dispatch(setFilterOrder('a-asc'));
         // dispatch(getCategoryItems(category))
     }, [])
@@ -39,7 +42,7 @@ const FilterSection = () => {
 
             }
         }
-    
+        dispatch(sortByBrand(selectedBrand))
         filtersApply && dispatch(setCurrentPage(1));
 
         setFiltersApply(false);
@@ -57,10 +60,19 @@ const FilterSection = () => {
 
     return (
         <div className="filter-section flex flex-col p-5 rounded-2xl  bg-base-200 gap-10" >
-            <div className="first flex justify-between">
+            <div className="first flex justify-between items-center">
                 <div className="search-input input-parent">
                     <label htmlFor="search">Search Product</label>
                     <input type="text" id='search' className='input' value={itemSearch} onChange={(e) => dispatch(setItemSearch(e.target.value))} />
+                </div>
+                <div className="brands">
+                    <label htmlFor="category">Select Brand</label>
+                    <select name="" id="brands" className='input' value={selectedBrand} onChange={(e) => dispatch(setSelectedBrand(e.target.value))} >
+                        <option value="">All</option>
+                        {allBrands.map((brand,index) => (
+                            <option value={brand} key={index}>{brand}</option>
+                        ))}
+                    </select>
                 </div>
                 <div className="category input-parent">
                     <label htmlFor="options">Select category</label>
@@ -71,7 +83,6 @@ const FilterSection = () => {
                         ))}
                     </select>
                 </div>
-                
                 <div className="sort input-parent">
                     <label htmlFor="">Sort by</label>
                     <select name="" id="" className='input' value={filterOrder} onChange={(e) => dispatch(setFilterOrder(e.target.value))}>
@@ -82,8 +93,8 @@ const FilterSection = () => {
                     </select>
                 </div>
             </div>
-            <div className="second flex justify-between">
-                <div className="input-parent w-[25%]">
+            <div className="second flex justify-around">
+                {/* <div className="input-parent w-[25%]">
                     <label htmlFor="range" className='flex justify-between w-full' >
                         <span>Select price</span>
                         <span>$10000</span>
@@ -93,7 +104,7 @@ const FilterSection = () => {
                         <span>0</span>
                         <span>Max:$1,000.00</span>
                     </div>
-                </div>
+                </div> */}
                 <button className='button h-10 w-3xs py-0 bg-blue-500 hover:bg-blue-700' onClick={() => setFiltersApply(true)}>Search</button>
                 <button className='h-10 w-3xs button bg-pink-500 hover:bg-pink-700' onClick={resetFilters}>Reset</button>
             </div>

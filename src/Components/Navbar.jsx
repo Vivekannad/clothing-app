@@ -21,7 +21,7 @@ const Navbar = () => {
         <div className="icons flex justify-between items-center gap-2 relative">
         <IoMoon className='cursor-pointer text-2xl'/>
         <Link to='/cart'>
-        <IoCartOutline className='cursor-pointer text-4xl hover:bg-gray-100 rounded-4xl py-1' />
+        <IoCartOutline className='cursor-pointer text-4xl hover:bg-base-300 rounded-4xl py-1' />
         </Link>
         {/* <IoCartOutline className='cursor-pointer text-4xl hover:bg-gray-100 rounded-4xl py-1' /> */}
         <span className='bg-blue-600 absolute px-1 rounded-2xl text-xs text-white right-0 bottom-5'>{cartedItems}</span>

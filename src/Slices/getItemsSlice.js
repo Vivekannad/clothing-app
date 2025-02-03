@@ -14,7 +14,9 @@ const initialState = {
     allCategories: [],
     category : '',
     filterOrder : '',
-    itemSearch : ''
+    itemSearch : '',
+    allBrands : [],
+    selectedBrand : ''
 };
 
 export const fetchProduct = createAsyncThunk('products/fetchProduct', async () => {
@@ -78,11 +80,22 @@ const productsSlice = createSlice({
                 }
             })
         },
+        getAllBrands : (state) => {
+            state.allBrands = [];
+            state.allItems.map((item) => {
+                if (state.allBrands.findIndex((brand) => brand === item.brand) === -1) {
+                    state.allBrands.push(item.brand);
+                }
+            })
+        },
         setItems : (state , action) => {
             state.items = action.payload;
         },
         setCategory : (state ,action) => {
             state.category = action.payload;
+        },
+        setSelectedBrand : (state , action) => {
+            state.selectedBrand = action.payload;
         },
         setFilterOrder : (state , action) => {
             state.filterOrder = action.payload;
@@ -132,6 +145,16 @@ const productsSlice = createSlice({
             const endIndex = state.currentPage * state.itemsPerPage;
             state.items = state.sortedItems.slice(startIndex, endIndex);
         } , 
+        sortByBrand : (state , action) => {
+            if(action.payload !== '') {
+                state.sortedItems = [...state.sortedItems].filter(item => item.brand == action.payload);
+            }
+
+            //apply pagination
+            const startIndex = (state.currentPage - 1) * state.itemsPerPage;
+            const endIndex = state.currentPage * state.itemsPerPage;
+            state.items = state.sortedItems.slice(startIndex, endIndex);
+        },
         setNameFilter: (state, action) => {
             // state.nameFilter = action.payload;
             state.sortedItems = state.allItems.filter(item => item.title.toLowerCase().includes(action.payload.toLowerCase()));
@@ -147,6 +170,4 @@ const productsSlice = createSlice({
 )
 
 export default productsSlice.reducer;
-export const { getFeaturedItems, getAllCategories, setCategory , setItemSearch , setFilterOrder, sortByPriceAsc, sortByPriceDesc , sortByTitleAsc , sortByTitleDesc , setCurrentPage , getCategoryItems , setNameFilter , setItems } = productsSlice.actions;
-// export const {getFeaturedItems , getAllCategories , setItems} = productsSlice.actions;
-// export const {items , allItems} = initialState;
+export const { getFeaturedItems, getAllCategories, sortByBrand , setCategory , setSelectedBrand, getAllBrands , setItemSearch , setFilterOrder, sortByPriceAsc, sortByPriceDesc , sortByTitleAsc , sortByTitleDesc , setCurrentPage , getCategoryItems , setNameFilter , setItems } = productsSlice.actions;
