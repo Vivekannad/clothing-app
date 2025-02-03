@@ -27,11 +27,11 @@ const Cart = () => {
       <main className="flex my-10 gap-5">
       <div className="col flex flex-col flex-3 gap-6">
         {items.length > 0 ? items.map(item => (
-            <div className="item flex border-b-2 border-black h-[90px] py-2 justify-between " key={item.id}>
+            <div className="item flex border-b-2 border-black h-[100px] py-2 justify-between " key={item.id}>
               <img src={item.image} alt="" className="h-[100%]" />
               <div className="item-details flex flex-col">
-                <h1 className="title font-bold">{item.title}</h1>
-                <p className="color">Color: <span className='colorsin bg-green-700'></span> </p>
+                <h1 className="title font-bold">{item.title.substring(0,20)}</h1>
+                <p className="color">Color: <div className={`colorsin inline-block`} style={{background : `${item.color}`}}></div> </p>
               </div>
               <div className="item-amount flex flex-col items-center">
                 <p>Amount</p>

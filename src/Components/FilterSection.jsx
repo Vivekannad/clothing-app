@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllCategories, getCategoryItems, setCategory, setFilterOrder, setItemSearch, setNameFilter, sortByPriceAsc, sortByPriceDesc, sortByTitleAsc, sortByTitleDesc } from '../Slices/getItemsSlice';
+import { getAllCategories, getCategoryItems, setCategory, setCurrentPage, setFilterOrder, setItemSearch, setNameFilter, sortByPriceAsc, sortByPriceDesc, sortByTitleAsc, sortByTitleDesc } from '../Slices/getItemsSlice';
 
 
 const FilterSection = () => {
@@ -39,6 +39,8 @@ const FilterSection = () => {
 
             }
         }
+    
+        filtersApply && dispatch(setCurrentPage(1));
 
         setFiltersApply(false);
     }, [filtersApply, dispatch])
@@ -69,6 +71,7 @@ const FilterSection = () => {
                         ))}
                     </select>
                 </div>
+                
                 <div className="sort input-parent">
                     <label htmlFor="">Sort by</label>
                     <select name="" id="" className='input' value={filterOrder} onChange={(e) => dispatch(setFilterOrder(e.target.value))}>
