@@ -14,9 +14,7 @@ const Products = () => {
     const currentPage = useSelector(state => state.products.currentPage);
 
     useEffect(() => {
-        dispatch(fetchProduct()).then((res) => {
-            console.log("I am running", res);
-        })
+        dispatch(fetchProduct())
     }, []);
 
     useEffect(() => {

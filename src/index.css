@@ -22,7 +22,7 @@
   @apply py-3 px-10;
 }
 .button {
-  @apply bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded cursor-pointer;
+  @apply  text-white font-bold py-2 px-4 rounded cursor-pointer;
 }
 .carousel {
   @apply h-full w-full flex items-center justify-start  overflow-x-auto whitespace-nowrap

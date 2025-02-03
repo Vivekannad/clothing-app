@@ -42,7 +42,6 @@ const FilterSection = () => {
 
     const categor = useSelector(state => state.products);
     const categories = categor.allCategories;
-    console.log(categor);
 
     const resetFilters = () => {
         dispatch(setFilterOrder(''));
@@ -89,8 +88,8 @@ const FilterSection = () => {
                         <span>Max:$1,000.00</span>
                     </div>
                 </div>
-                <button className='button h-10 w-3xs py-0' onClick={() => setFiltersApply(true)}>Search</button>
-                <button className='h-10 w-3xs rounded-sm bg-pink-600 hover:bg-pink-700 cursor-pointer text-white  p-0' onClick={resetFilters}>Reset</button>
+                <button className='button h-10 w-3xs py-0 bg-blue-500 hover:bg-blue-700' onClick={() => setFiltersApply(true)}>Search</button>
+                <button className='h-10 w-3xs button bg-pink-500 hover:bg-pink-700' onClick={resetFilters}>Reset</button>
             </div>
         </div>
     )
