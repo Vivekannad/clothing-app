@@ -7,6 +7,7 @@ import image4 from '../assets/image-4.webp'
 import Card from './Card'
 import { fetchProduct, getFeaturedItems } from '../Slices/getItemsSlice'
 import { useDispatch, useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
 
 const Hero = () => {
   const dispatch = useDispatch();
@@ -22,7 +23,7 @@ const Hero = () => {
         <div className="col w-[45%] flex flex-col gap-8">
             <h1 className='text-6xl font-bold '>We are changing the way people shop</h1>
             <p className='text-gray-500 text-xl'>Get your products delivered to your doorstep</p>
-            <button className='button w-[40%] bg-blue-500 hover:bg-blue-700'>Shop now</button>
+            <Link to={'/products'} className='button w-[40%] bg-blue-500 hover:bg-blue-700'>Shop now</Link>
         </div>
         <div className="col w-[45%] h-96 bg-blue-800 ">
             <div className="carousel">

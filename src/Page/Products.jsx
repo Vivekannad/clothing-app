@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchProduct, sortByTitleAsc, setCurrentPage } from '../Slices/getItemsSlice';
 import Spinner from '../Components/Spinner';
 import Card from '../Components/Card';
+import ProductCards from '../Components/ProductCards';
 
 
 const Products = () => {
@@ -14,7 +15,9 @@ const Products = () => {
     const currentPage = useSelector(state => state.products.currentPage);
 
     useEffect(() => {
-        dispatch(fetchProduct())
+        dispatch(fetchProduct()).then((res) => {
+            console.log(res);
+        })
     }, []);
 
     useEffect(() => {
@@ -44,9 +47,7 @@ const Products = () => {
                     <>
                         <section className='products pad-start mt-10'>
                             <FilterSection />
-                            {
-                                items.length > 0 ? <Card items={items} /> : <h1 className='mx-auto font-bold text-4xl'>No items found</h1>
-                            }
+                            <ProductCards />
                             <div className="pages flex justify-end gap-1 my-10 items-center">
                                 <div className="page-item">
                                     <button

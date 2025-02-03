@@ -12,16 +12,21 @@ const initialState = {
     itemsPerPage: 15,
     featuredItems: [],
     allCategories: [],
-    category : '0',
+    category : '',
     filterOrder : '',
     itemSearch : ''
 };
 
 export const fetchProduct = createAsyncThunk('products/fetchProduct', async () => {
     
-    const url = (`https://api.escuelajs.co/api/v1/products`);
+    const url = (`https://api.jsonbin.io/v3/b/67a08a61e41b4d34e4833e2a/latest`);
 
-    const response = await fetch(url);
+    const response = await fetch(url, {
+        method: 'GET',
+        headers  : {
+             'X-Master-Key': '$2a$10$t.YvpbvLVvLEsbEHwhKxP.wU8xNKelkAthyRnjvTKUPV4ESZQldye'
+        }
+    });
     if (!response.ok) {
         throw new Error('Network response was not ok');
     }
@@ -30,7 +35,7 @@ export const fetchProduct = createAsyncThunk('products/fetchProduct', async () =
     if (data.error) {
         throw new Error('Error');
     }
-    return data;
+    return data.record.products;
 });
 
 const productsSlice = createSlice({
@@ -68,8 +73,8 @@ const productsSlice = createSlice({
         getAllCategories: (state) => {
             state.allCategories = [];
             state.allItems.map((item) => {
-                if (state.allCategories.findIndex((category) => category.name === item.category.name) === -1) {
-                    state.allCategories.push({ name: item.category.name, id: item.category.id });
+                if (state.allCategories.findIndex((category) => category === item.category) === -1) {
+                    state.allCategories.push(item.category);
                 }
             })
         },
@@ -117,8 +122,8 @@ const productsSlice = createSlice({
             state.items = state.sortedItems.slice(startIndex, endIndex);
         },
         getCategoryItems: (state, action) => {
-            if(Number(action.payload) !== 0) {
-                state.sortedItems = [...state.sortedItems].filter(item => item.category.id === Number(action.payload));
+            if(action.payload !== '') {
+                state.sortedItems = [...state.sortedItems].filter(item => item.category == action.payload);
                 // state.sortedItems = state.getCategoryItems;
             }
         

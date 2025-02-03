@@ -1,4 +1,9 @@
 @import "tailwindcss";
+@plugin "daisyui";
+
+
+
+
 
 /* .container {
   @apply w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
@@ -34,13 +39,13 @@
   @apply rounded-3xl mx-2 min-w-80 max-w-80 h-[98%] object-cover ;
 }
 .card {
-@apply flex flex-col items-center gap-4 p-2 w-[30%] rounded-lg bg-gray-300 cursor-pointer font-mono;
+@apply flex flex-col items-center w-[32%] rounded-lg bg-conic-210 cursor-pointer ;
 }
 .input-parent {
   @apply flex items-center gap-2 flex-col;
 }
 .input {
-  @apply border-2 border-gray-300 rounded-lg px-2;
+  @apply border-2 border-gray-300 rounded-lg px-2 font-bold;
 }
 .check {
   @apply w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600

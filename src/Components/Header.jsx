@@ -5,7 +5,7 @@ import { Outlet } from 'react-router-dom'
 const Header = () => {
   return (
     <>
-    <header className='bg-stone-200 pad-start'>
+    <header className='bg-base-200 pad-start'>
         <Navbar/>
     </header>
         <Outlet/>

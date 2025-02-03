@@ -2,11 +2,13 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllCategories, getCategoryItems, setCategory, setFilterOrder, setItemSearch, setNameFilter, sortByPriceAsc, sortByPriceDesc, sortByTitleAsc, sortByTitleDesc } from '../Slices/getItemsSlice';
 
-const FilterSection = () => {
 
+const FilterSection = () => {
+    
     const [filtersApply, setFiltersApply] = useState(false);
     const dispatch = useDispatch();
     const category = useSelector(state => state.products.category);
+    const allCategory = useSelector(state => state.products.allCategories);
     const filterOrder = useSelector(state => state.products.filterOrder);
     const itemSearch = useSelector(state => state.products.itemSearch);
 
@@ -20,6 +22,7 @@ const FilterSection = () => {
     useEffect(() => {
 
         dispatch(setNameFilter(itemSearch.trim()));
+
         dispatch(getCategoryItems(category))
         if (filterOrder !== '') {
             if (filterOrder === 'a-asc') {
@@ -51,7 +54,7 @@ const FilterSection = () => {
     }
 
     return (
-        <div className="filter-section flex flex-col p-5 rounded-2xl  bg-gray-200 gap-10" >
+        <div className="filter-section flex flex-col p-5 rounded-2xl  bg-base-200 gap-10" >
             <div className="first flex justify-between">
                 <div className="search-input input-parent">
                     <label htmlFor="search">Search Product</label>
@@ -60,9 +63,9 @@ const FilterSection = () => {
                 <div className="category input-parent">
                     <label htmlFor="options">Select category</label>
                     <select name="" id="options" className='input' value={category} onChange={(e) => dispatch(setCategory(e.target.value))}>
-                        <option value='0' >all</option>
-                        {categories.map((category) => (
-                            <option value={category.id} key={category.id}>{category.name}</option>
+                        <option value='' >all</option>
+                        {categories.map((category,index) => (
+                            <option value={category} key={index}>{category}</option>
                         ))}
                     </select>
                 </div>
