@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllBrands, getAllCategories, getCategoryItems, setCategory, setCurrentPage, setFilterOrder, setItemSearch, setNameFilter, setSelectedBrand, sortByBrand, sortByPriceAsc, sortByPriceDesc, sortByTitleAsc, sortByTitleDesc } from '../Slices/getItemsSlice';
+import { IoIosArrowDropdown, IoIosArrowDropup } from 'react-icons/io';
 
 
 const FilterSection = () => {
     
     const [filtersApply, setFiltersApply] = useState(false);
+    const [seeFilters , setSeeFilters] = useState(true);
     const dispatch = useDispatch();
     const category = useSelector(state => state.products.category);
     const allBrands = useSelector(state => state.products.allBrands);
@@ -16,9 +18,10 @@ const FilterSection = () => {
 
     useEffect(() => {
         dispatch(getAllCategories());
-
-        // dispatch(setFilterOrder('a-asc'));
-        // dispatch(getCategoryItems(category))
+        const width = window.innerWidth;
+        (width < 768) && setSeeFilters(false) 
+        
+        
     }, [])
     
     useEffect(() => {
@@ -26,10 +29,11 @@ const FilterSection = () => {
     },[category])
 
     useEffect(() => {
-
+        console.log("category", category);
         dispatch(setNameFilter(itemSearch.trim()));
 
         dispatch(getCategoryItems(category))
+
         if (filterOrder !== '') {
             if (filterOrder === 'a-asc') {
                 dispatch(sortByTitleAsc());
@@ -57,36 +61,45 @@ const FilterSection = () => {
     const resetFilters = () => {
         dispatch(setFilterOrder(''));
         dispatch(setItemSearch(''));
-        dispatch(setCategory(''))
+        dispatch(setCategory(''));
+        dispatch(setSelectedBrand(''));
         setFiltersApply(true);
     }
 
     return (
-        <div className="filter-section flex flex-col p-5 rounded-2xl  bg-base-200 gap-10" >
-            <div className="first flex justify-between items-center">
-                <div className="search-input input-parent">
+        <>
+            <p className='md:sr-only' >Filters{
+                !seeFilters ? <IoIosArrowDropdown className='inline cursor-pointer text-2xl ml-1' onClick={() => setSeeFilters(true)} /> : <IoIosArrowDropup className='inline cursor-pointer text-2xl ml-1' onClick={() => setSeeFilters(false)} /> 
+                }  </p>
+                {seeFilters && 
+        <div className="filter-section flex flex-col p-5 rounded-2xl  bg-base-200 gap-10 flex-wrap" >
+            <div className="first flex md:justify-between md:items-center flex-wrap md:flex-row  flex-col ">
+                <div className="search-input input-parent md:w-[20%] min-w-36 w-full">
                     <label htmlFor="search">Search Product</label>
-                    <input type="text" id='search' className='input' value={itemSearch} onChange={(e) => dispatch(setItemSearch(e.target.value))} />
+                    <input type="text" id='search' className='input ' value={itemSearch} onChange={(e) => dispatch(setItemSearch(e.target.value))} />
                 </div>
-                <div className="brands">
+                <div className="brands input-parent md:w-[20%] min-w-36 w-full" >
                     <label htmlFor="category">Select Brand</label>
-                    <select name="" id="brands" className='input' value={selectedBrand} onChange={(e) => dispatch(setSelectedBrand(e.target.value))} >
+                    <select name="" id="brands" className='input ' value={selectedBrand} onChange={(e) => dispatch(setSelectedBrand(e.target.value))} >
                         <option value="">All</option>
                         {allBrands.map((brand,index) => (
                             <option value={brand} key={index}>{brand}</option>
                         ))}
                     </select>
                 </div>
-                <div className="category input-parent">
+                <div className="category input-parent md:w-[20%] min-w-36 w-full">
                     <label htmlFor="options">Select category</label>
-                    <select name="" id="options" className='input' value={category} onChange={(e) => dispatch(setCategory(e.target.value))}>
+                    <select name="" id="options" className='input' value={category} onChange={(e) => {
+                        dispatch(setCategory(e.target.value))
+                        dispatch(setSelectedBrand(''))
+                    }}>
                         <option value='' >all</option>
                         {categories.map((category,index) => (
                             <option value={category} key={index}>{category}</option>
                         ))}
                     </select>
                 </div>
-                <div className="sort input-parent">
+                <div className="sort input-parent md:w-[20%]  w-full">
                     <label htmlFor="">Sort by</label>
                     <select name="" id="" className='input' value={filterOrder} onChange={(e) => dispatch(setFilterOrder(e.target.value))}>
                         <option value="a-asc">a-z</option>
@@ -96,7 +109,7 @@ const FilterSection = () => {
                     </select>
                 </div>
             </div>
-            <div className="second flex justify-around">
+            <div className="second flex md:justify-around md:flex-row flex-col items-center ms:gap-0 gap-3">
                 {/* <div className="input-parent w-[25%]">
                     <label htmlFor="range" className='flex justify-between w-full' >
                         <span>Select price</span>
@@ -112,6 +125,8 @@ const FilterSection = () => {
                 <button className='h-10 w-3xs button bg-pink-500 hover:bg-pink-700' onClick={resetFilters}>Reset</button>
             </div>
         </div>
+}
+        </>
     )
 }
 

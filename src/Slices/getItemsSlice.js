@@ -68,9 +68,11 @@ const productsSlice = createSlice({
     reducers: {
         getFeaturedItems: (state) => {
             state.featuredItems = [];
-            for (let i = 0; i <= 2; i++) {
-                state.featuredItems.push(state.items[i]);
-            }
+            // for (let i = 0; i <= 2; i++) {
+            //     state.featuredItems.push(state.items[i]);
+            // }
+          state.featuredItems =  state.allItems.filter(item => item.popular === true);
+          state.featuredItems.length = 4
         },
         getAllCategories: (state) => {
             state.allCategories = [];

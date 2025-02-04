@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom'
 const PageLink = ({link,to}) => {
   return (
     <>
-        <li className="p-1 rounded-lg transition-all duration-200 cursor-pointer hover:bg-base-300">
+        <li className="p-1 rounded-lg transition-all duration-200 cursor-pointer hover:bg-base-300 md:w-auto w-full">
   <NavLink
     to={to}
     className={({ isActive }) =>

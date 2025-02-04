@@ -5,7 +5,6 @@ import { adjustQuantity, removeFromCart } from '../Slices/cartSlice';
 const Cart = () => {
 
   const items = useSelector(state => state.cart.cartedItems);
-  console.log(items);
   const dispatch = useDispatch();
 
   const removeItem = (id) => {
@@ -13,7 +12,6 @@ const Cart = () => {
   }
 
   const adjustItemAmount = (amount , id) => {
-    // console.log(typeof  Number(amount.target.value) , amount.target.value)
     dispatch(adjustQuantity({amount: Number(amount.target.value) , id : id}));
   } 
   const subTotal = items.reduce((acc, item) => acc + item.price * item.amount, 0);
@@ -22,13 +20,13 @@ const Cart = () => {
 
   return (
     <div className='cart pad-start'>
-      <h1>Shopping Cart</h1>
+      <h1 className='text-3xl font-bold py-3'>Shopping Cart</h1>
       <hr />
-      <main className="flex my-10 gap-5">
-      <div className="col flex flex-col flex-3 gap-6">
+      <main className="flex my-5 gap-5 md:flex-row flex-col">
+      <div className="col flex flex-col flex-3 gap-6  ">
         {items.length > 0 ? items.map(item => (
             <div className="item flex border-b-2 border-black h-[100px] py-2 justify-between " key={item.id}>
-              <img src={item.image} alt="" className="h-[100%]" />
+              <img src={item.image} alt="" className="h-[100%] ml-2" />
               <div className="item-details flex flex-col">
                 <h1 className="title font-bold">{item.title.substring(0,20)}</h1>
                 <p className="color">Color: <div className={`colorsin inline-block`} style={{background : `${item.color}`}}></div> </p>

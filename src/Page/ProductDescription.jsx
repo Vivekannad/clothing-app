@@ -55,12 +55,12 @@ const ProductDescription = () => {
         <p className='text-gray-400'> &gt; </p>
         <Link to="/products">Products</Link>
     </div>
-    <div className='description flex mt-4 gap-10 flex-wrap'>
-        <div className="col w-[40%] min-w-80 ">
+    <div className='description flex md:flex-row md:items-start flex-col items-center mt-4 gap-10 flex-wrap justify-center'>
+        <div className="col md:w-[40%] w-[95%]  ">
             <div className="main-image flex justify-center ">
             <img src={displayImg} alt="" className='rounded-2xl max-h-96' />
             </div>
-            <div className="image-options flex  items-end gap-4 mt-2 ml-2">
+            <div className="image-options flex items-end gap-4 mt-2 ml-2">
                 <div className="image-option h-[100%]" >
                     <img src={item.images[0]} alt={item.description} className=' h-[80px] w-[80px] cursor-pointer' onClick={() => setDisplayImg(item.images[0])} />
                 </div>
@@ -72,7 +72,7 @@ const ProductDescription = () => {
                 </div>
             </div>
         </div>
-        <div className="col w-[40%] min-w-80 flex flex-col gap-2 justify-center">
+        <div className="col md:w-[40%] w-[95%]  flex flex-col gap-2 justify-center">
             <h1 className='font-bold text-2xl'>{item.title}</h1>
             <p className='italic font-extrabold'>${item.price}</p>
             <p>{item.description}</p>
