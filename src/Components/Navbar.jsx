@@ -1,16 +1,20 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { IoCartOutline, IoMoon } from 'react-icons/io5'
-import { useSelector } from 'react-redux'
+import { useSelector , useDispatch } from 'react-redux'
 import { Link, NavLink } from 'react-router-dom'
 import PageLink from './PageLink'
 import { GiHamburgerMenu } from 'react-icons/gi'
 import {  useDebouncedCallback } from 'use-debounce'
+import { changeTheme } from '../Slices/themeSlice'
+import { CiLight } from 'react-icons/ci'
 
 
 const Navbar = () => {
+  const dispatch = useDispatch();
   const cartedItems = useSelector(state => state.cart.totalCartedItems)
   const [isMobile , setIsMobile] = useState(window.innerWidth <= 768);
   const [navLinksVisible , setNavLinksVisible] = useState(!isMobile);
+  const theme = useSelector(state => state.theme.theme);
   const handleSize = useDebouncedCallback(() =>{
     setIsMobile(window.innerWidth <= 768);
     setNavLinksVisible(!isMobile);
@@ -38,8 +42,12 @@ const Navbar = () => {
             <PageLink link= "Products" to="/products" />
             <PageLink link='Cart' to='/cart' />
         </ul>
-        <div className = {`icons flex justify-between items-center gap-2 relative ${isMobile && !navLinksVisible ? 'hidden' : ''} `}>
-        <IoMoon className='cursor-pointer text-2xl'/>
+        <div className = {`icons flex md:w-auto w-full md:justify-between justify-end items-center gap-2 relative ${isMobile && !navLinksVisible ? 'hidden' : ''} `}>
+        {theme === 'dark' ?
+        <CiLight className='cursor-pointer text-2xl' onClick={() => dispatch(changeTheme())} />
+        : 
+        <IoMoon className='cursor-pointer text-2xl' onClick={() => dispatch(changeTheme())}/>
+      }
         <Link to='/cart'>
         <IoCartOutline className='cursor-pointer text-4xl hover:bg-base-300 rounded-4xl py-1' />
         </Link>

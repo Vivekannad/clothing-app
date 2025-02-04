@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { STATUS } from './status.js';
+import { meta } from '@eslint/js';
 
 const initialState = {
     items: [],
@@ -21,7 +22,7 @@ const initialState = {
 
 export const fetchProduct = createAsyncThunk('products/fetchProduct', async () => {
     
-    const url = (`https://api.jsonbin.io/v3/b/67a08a61e41b4d34e4833e2a/latest`);
+    const url = (`https://api.jsonbin.io/v3/b/${import.meta.env.VITE_URL_ENDPOINT}/latest`);
 
     const response = await fetch(url, {
         method: 'GET',

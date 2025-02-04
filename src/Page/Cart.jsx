@@ -6,6 +6,7 @@ const Cart = () => {
 
   const items = useSelector(state => state.cart.cartedItems);
   const dispatch = useDispatch();
+  const theme = useSelector(state => state.theme.theme);
 
   const removeItem = (id) => {
     dispatch(removeFromCart(id));
@@ -42,7 +43,7 @@ const Cart = () => {
         ))
           : <p>No items in the cart</p>}
                   </div>
-          <div className="col gap-2 flex flex-col flex-1 px-3 bg-gray-100 justify-center rounded-2xl h-[200px]">
+          <div className={`col gap-2 flex flex-col flex-1 px-3 justify-center rounded-2xl h-[200px] ${theme === 'light' && 'bg-gray-100'} `}>
               <div className="sub-total flex justify-between border-b-2 border-gray-200 py-2">
                 <p>Subtotal:</p>
                 <p>${subTotal}</p>

@@ -9,6 +9,7 @@ import ProductCards from '../Components/ProductCards';
 
 const Products = () => {
  
+    console.log(typeof import.meta.env.VITE_URL_ENDPOINT)
     const dispatch = useDispatch();
     const items = useSelector(state => state.products.items);
     const allItems = useSelector(state => state.products.allItems)
@@ -48,31 +49,28 @@ const Products = () => {
                         <section className='products pad-start mt-10'>
                             <FilterSection />
                             <ProductCards />
-                            <div className="pages flex justify-end gap-1 my-10 items-center">
+                            <div className={`pages flex justify-end gap-1 my-10 items-center  `}>
                                 <div className="page-item">
                                     <button
-                                        className="page-link border-2 px-2 border-black hover:bg-gray-200 cursor-pointer "
-                                        style={{ backgroundColor: currentPage === 1 && 'lightgreen' }}
+                                        className={`page-link border-2 px-2 border-black hover:bg-green-700 cursor-pointer ${currentPage === 1 && 'bg-green-700 text-white'} `}
                                         onClick={() => { handlePageChange(1) }}
                                     > 1</button>
                                 </div>
                                 <div className="page-item">
                                     <button
-                                        className="page-link border-2 px-2 border-black hover:bg-gray-200 cursor-pointer"
-                                        style={{ backgroundColor: currentPage === 2 && 'lightgreen' }}
+                                        className={`page-link border-2 px-2 border-black  hover:bg-green-700 cursor-pointer ${currentPage === 2 && 'bg-green-700 text-white'} `}
                                         onClick={() => { handlePageChange(2) }}>2
                                     </button>
                                 </div>
                                 <div className="page-item">
                                     <button
-                                        className="page-link border-2 px-2 border-black hover:bg-gray-200 cursor-pointer"
-                                        style={{ backgroundColor: currentPage === 3 && 'lightgreen' }}
+                                        className={`page-link border-2 px-2 border-black hover:bg-green-700 cursor-pointer ${currentPage === 3 && 'bg-green-700 text-white'} `}
                                         onClick={() => { handlePageChange(3) }}
                                     >3</button>
                                 </div>
                                 <div className="page-item">
                                     <button
-                                        className="page-link border-2 px-2 border-black hover:bg-gray-200 cursor-pointer"
+                                        className="page-link border-2 px-2 border-black hover:bg-green-700 cursor-pointer"
                                         onClick={() => { handlePageChange(0) }}
                                     >Next</button>
                                 </div>
