@@ -2,12 +2,14 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllBrands, getAllCategories, getCategoryItems, setCategory, setCurrentPage, setFilterOrder, setItemSearch, setNameFilter, setSelectedBrand, sortByBrand, sortByPriceAsc, sortByPriceDesc, sortByTitleAsc, sortByTitleDesc } from '../Slices/getItemsSlice';
 import { IoIosArrowDropdown, IoIosArrowDropup } from 'react-icons/io';
+import { useDebouncedCallback } from 'use-debounce';
 
 
 const FilterSection = () => {
+    const [isMobile , setIsMobile] = useState(window.innerWidth <= 768);
+    const [seeFilters , setSeeFilters] = useState(!isMobile);
     
     const [filtersApply, setFiltersApply] = useState(false);
-    const [seeFilters , setSeeFilters] = useState(true);
     const dispatch = useDispatch();
     const category = useSelector(state => state.products.category);
     const allBrands = useSelector(state => state.products.allBrands);
@@ -15,13 +17,18 @@ const FilterSection = () => {
     const filterOrder = useSelector(state => state.products.filterOrder);
     const itemSearch = useSelector(state => state.products.itemSearch);
 
-
+    
+    const resize = useDebouncedCallback(() => {
+        const mobile = window.innerWidth <= 768;
+        setIsMobile(mobile);
+        setSeeFilters(!mobile);
+    },250);
     useEffect(() => {
         dispatch(getAllCategories());
-        const width = window.innerWidth;
-        (width < 768) && setSeeFilters(false) 
-        
-        
+        window.addEventListener('resize', resize);
+        return () => {
+            window.removeEventListener('resize', resize);
+        }
     }, [])
     
     useEffect(() => {
@@ -68,10 +75,10 @@ const FilterSection = () => {
 
     return (
         <>
-            <p className='md:sr-only' >Filters{
-                !seeFilters ? <IoIosArrowDropdown className='inline cursor-pointer text-2xl ml-1' onClick={() => setSeeFilters(true)} /> : <IoIosArrowDropup className='inline cursor-pointer text-2xl ml-1' onClick={() => setSeeFilters(false)} /> 
+            <p className='md:hidden' >Filters{
+              isMobile && !seeFilters ? <IoIosArrowDropdown className='inline cursor-pointer text-2xl ml-1' onClick={() => setSeeFilters(true)} /> : <IoIosArrowDropup className='inline cursor-pointer text-2xl ml-1' onClick={() => setSeeFilters(false)} /> 
                 }  </p>
-                {seeFilters && 
+                { seeFilters && 
         <div className="filter-section flex flex-col p-5 rounded-2xl  bg-base-200 gap-10 flex-wrap" >
             <div className="first flex md:justify-between md:items-center flex-wrap md:flex-row  flex-col ">
                 <div className="search-input input-parent md:w-[20%] min-w-36 w-full">

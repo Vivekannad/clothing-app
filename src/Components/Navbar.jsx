@@ -1,17 +1,25 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { IoCartOutline, IoMoon } from 'react-icons/io5'
 import { useSelector } from 'react-redux'
 import { Link, NavLink } from 'react-router-dom'
 import PageLink from './PageLink'
 import { GiHamburgerMenu } from 'react-icons/gi'
+import {  useDebouncedCallback } from 'use-debounce'
+
 
 const Navbar = () => {
   const cartedItems = useSelector(state => state.cart.totalCartedItems)
-  const [navLinksVisible , setNavLinksVisible] = useState(true);
-
+  const [isMobile , setIsMobile] = useState(window.innerWidth <= 768);
+  const [navLinksVisible , setNavLinksVisible] = useState(!isMobile);
+  const handleSize = useDebouncedCallback(() =>{
+    setIsMobile(window.innerWidth <= 768);
+    setNavLinksVisible(!isMobile);
+  },250)
   useEffect(() => {
-    const width = window.innerWidth;
-    (width < 768) && setNavLinksVisible(false)
+    window.addEventListener('resize', handleSize);
+    return () => {
+      window.removeEventListener('resize', handleSize);
+    }
   }, [])
   
 
@@ -19,15 +27,18 @@ const Navbar = () => {
     <nav className='navbar flex md:justify-between md:items-center md:flex-row flex-col items-start relative'>
         <div className="logo  md:w-auto flex items-center md:pb-0 pb-2 ">
             <h1 className='px-4 py-2 rounded-2xl bg-blue-700 text-white text-3xl'>V</h1>
-            <GiHamburgerMenu onClick={() => setNavLinksVisible(!navLinksVisible)} className='cursor-pointer absolute right-0 md:sr-only' />
+           {
+            isMobile &&
+            <GiHamburgerMenu onClick={() => setNavLinksVisible(!navLinksVisible)} className='cursor-pointer absolute right-0 md:hidden' />
+           }
         </div>
-        <ul className = { navLinksVisible ? "links flex justify-between md:items-center gap-2 md:flex-row items-start flex-col" : 'sr-only' }>
+        <ul className = { `links flex justify-between md:items-center gap-2 md:flex-row items-start flex-col ${isMobile && !navLinksVisible ? 'hidden' : ''} ` }>
             <PageLink link='Home' to='/' />
             <PageLink link='About' to='/about' />
             <PageLink link= "Products" to="/products" />
             <PageLink link='Cart' to='/cart' />
         </ul>
-        <div className = { navLinksVisible ? "icons flex justify-between items-center gap-2 relative" : 'sr-only' }>
+        <div className = {`icons flex justify-between items-center gap-2 relative ${isMobile && !navLinksVisible ? 'hidden' : ''} `}>
         <IoMoon className='cursor-pointer text-2xl'/>
         <Link to='/cart'>
         <IoCartOutline className='cursor-pointer text-4xl hover:bg-base-300 rounded-4xl py-1' />
