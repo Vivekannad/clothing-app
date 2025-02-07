@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { STATUS } from './status.js';
-import { meta } from '@eslint/js';
+
 
 const initialState = {
     items: [],
